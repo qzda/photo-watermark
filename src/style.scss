@@ -28,11 +28,16 @@ body {
   margin: 0;
 }
 
+pre {
+  text-align: left;
+}
+
 #app {
   max-width: 1600px;
-  min-width: 390px;
-  overflow-x: hidden;
+  min-width: 300px;
+  width: 100vw;
   height: 100vh;
+  overflow-x: hidden;
   margin: 0 auto;
   padding: 0 1px;
   text-align: center;
@@ -42,7 +47,8 @@ body {
   gap: 0.5rem;
 }
 
-button {
+.btn {
+  user-select: none;
   cursor: pointer;
   display: inline-block;
   padding: 0.4rem 0.6rem;
@@ -50,7 +56,6 @@ button {
   font-size: 16px;
   text-align: center;
   text-decoration: none;
-  // color: #333;
   background-color: #fff;
   border: 2px solid #eee;
   border-radius: 8px;
@@ -70,4 +75,18 @@ button {
     box-shadow: none;
     transform: translateY(0);
   }
+
+  &[disabled] {
+    cursor: not-allowed;
+  }
+}
+
+.img {
+  padding: 0.4rem;
+  outline: none;
+  background-color: #fff;
+  border: 2px solid #eee;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
 }

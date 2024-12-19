@@ -3,11 +3,11 @@
   import { ref, watch } from "vue";
   import type { Tags } from "exifreader";
   import { version } from "../package.json";
-  import { imgFileToDataUrl } from "./utils/img";
+  import { devLog, imgFileToDataUrl } from "./utils/img";
   import { getImgExif } from "./utils/img";
 
   const fileDialog = useFileDialog({
-    accept: "image/*",
+    accept: "image/jpg,image/jpeg,image/tiff",
     multiple: false,
   });
 
@@ -19,7 +19,7 @@
   };
   const uploadImg = ref<Image>();
   watch(fileDialog.files, (value) => {
-    if (value?.length && value.item(0) && /\.(jpg|jpeg|tiff)$/i.test(value?.item(0)?.name!)) {
+    if (value?.length && value.item(0)) {
       uploadImg.value = {
         file: value.item(0)!,
         open: false,
@@ -27,7 +27,7 @@
       };
       getImgExif(value.item(0)!).then((exif) => {
         if (uploadImg.value) {
-          console.log(exif);
+          devLog("exif", exif);
           exif.MakerNote = undefined;
           uploadImg.value.exif = exif;
         }
@@ -39,58 +39,73 @@
 
   function choiceDir(e: MouseEvent) {
     e.preventDefault();
-    // fileDialog.reset();
     fileDialog.open();
   }
-
-  // const imgClass = "max-h-70vh max-w-45% rd overflow-hidden";
 </script>
 
 <template>
-  <h1 class="relative my-0">
+  <h1 class="relative">
     <span>Photo Frame</span>
     <span class="font-400 text-sm op50 absolute bottom-2 mx-2">v{{ version }}</span>
   </h1>
 
   <div class="xy-center gap-2">
-    <button
+    <div
       @click="choiceDir"
-      class="btn xy-center"
+      class="btn text-sm xy-center"
     >
-      <i class="i-carbon-upload text-xl font-bold" />
+      <i class="i-carbon-upload font-bold mr-1" />
       <span>Upload</span>
-    </button>
+    </div>
 
-    <button
-      class="btn xy-center disabled:op-50"
+    <div
+      class="btn text-sm xy-center disabled:op-50"
       :disabled="!uploadImg"
     >
-      <i class="i-carbon-download text-xl font-bold" />
+      <i class="i-carbon-download font-bold mr-1" />
       <span>Download</span>
-    </button>
+    </div>
   </div>
 
-  <div class="my-2"></div>
+  <div
+    v-if="uploadImg"
+    class="yx px-4 pb-2"
+  >
+    <div class="w-100% min-h-300px">
+      <h3 class="my-0">Preview</h3>
 
-  <div class="flex-1 yx-center flex-wrap px-2 pb-2">
-    <h3 class="my-0">Preview</h3>
-    <div class="min-h-300px max-h-300px xy-center">
       <img
-        v-if="uploadImg"
-        class="w-100% h-100%"
+        class="img w-100%"
         style="object-fit: contain"
         :src="uploadImg.fileDataUrl"
-        @click="choiceDir"
       />
     </div>
 
-    <h3 class="my-0">Config</h3>
-    <div class="flex-1 min-w-300px">
-      <pre
-        v-if="uploadImg"
-        class="box text-left m-0 overflow-auto"
-        >{{ JSON.stringify(uploadImg.exif, null, 2) }}</pre
-      >
+    <div class="w-100%">
+      <h3 class="my-0">Config</h3>
+    </div>
+
+    <div class="w-100%">
+      <h3 class="my-0">Info</h3>
+
+      <div>
+        <pre>{{
+          JSON.stringify(
+            {
+              Make: uploadImg.exif?.Make?.description,
+              Model: uploadImg.exif?.Model?.description,
+              FNumber: uploadImg.exif?.FNumber?.description,
+              ISOSpeedRatings: uploadImg.exif?.ISOSpeedRatings?.description,
+              ShutterSpeedValue: uploadImg.exif?.ShutterSpeedValue?.description,
+              FocalLength: uploadImg.exif?.FocalLength?.description,
+              DateTimeOriginal: uploadImg.exif?.DateTimeOriginal?.description,
+              OffsetTime: uploadImg.exif?.OffsetTime?.description,
+            },
+            null,
+            2,
+          )
+        }}</pre>
+      </div>
     </div>
   </div>
 </template>
