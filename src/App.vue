@@ -44,52 +44,42 @@
 </script>
 
 <template>
-  <h1 class="relative">
-    <span>Photo Frame</span>
-    <span class="font-400 text-sm op50 absolute bottom-2 mx-2">v{{ version }}</span>
-  </h1>
+  <div class="flex-1">
+    <div class="xy-between flex-wrap">
+      <div class="xy items-end">
+        <span class="text-2xl font-bold">Photo Frame</span>
+        <span class="text-sm op50 mb-0.5">v{{ version }}</span>
+      </div>
 
-  <div class="xy-center gap-2">
-    <div
-      @click="choiceDir"
-      class="btn text-sm xy-center"
-    >
-      <i class="i-carbon-upload font-bold mr-1" />
-      <span>Upload</span>
+      <div class="xy">
+        <div
+          class="btn"
+          @click="choiceDir"
+        >
+          <i class="i-material-symbols:upload" />
+          <span>Upload</span>
+        </div>
+
+        <div
+          class="btn"
+          :class="[uploadImg ? null : 'disabled']"
+        >
+          <i class="i-material-symbols:download" />
+          <span>Download</span>
+        </div>
+      </div>
     </div>
 
-    <div
-      class="btn text-sm xy-center disabled:op-50"
-      :disabled="!uploadImg"
-    >
-      <i class="i-carbon-download font-bold mr-1" />
-      <span>Download</span>
-    </div>
-  </div>
+    <div class="flex-1 xy-between">
+      <div class="flex-1">
+        <h3 class="my-0">Config</h3>
+      </div>
 
-  <div
-    v-if="uploadImg"
-    class="yx px-4 pb-2"
-  >
-    <div class="w-100% min-h-300px">
-      <h3 class="my-0">Preview</h3>
-
-      <img
-        class="img w-100%"
-        style="object-fit: contain"
-        :src="uploadImg.fileDataUrl"
-      />
-    </div>
-
-    <div class="w-100%">
-      <h3 class="my-0">Config</h3>
-    </div>
-
-    <div class="w-100%">
+      <!-- <div class="flex-1">
       <h3 class="my-0">Info</h3>
 
       <div>
-        <pre>{{
+        <pre v-if="uploadImg">{{
           JSON.stringify(
             {
               Make: uploadImg.exif?.Make?.description,
@@ -106,6 +96,16 @@
           )
         }}</pre>
       </div>
+    </div> -->
     </div>
+  </div>
+
+  <div class="max-w-40%">
+    <img
+      v-if="uploadImg"
+      draggable="false"
+      class="border border-dashed max-h-full max-w-full"
+      :src="uploadImg.fileDataUrl"
+    />
   </div>
 </template>

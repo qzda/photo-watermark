@@ -1,23 +1,18 @@
-import {
-  defineConfig,
-  presetAttributify,
-  presetIcons,
-  presetUno,
-  // presetWebFonts,
-} from "unocss";
+import { defineConfig, presetWind4, presetIcons } from 'unocss'
 
 export default defineConfig({
   shortcuts: {
-    xy: "flex gap-2  items-center",
-    yx: "flex flex-col gap-2  items-center",
-    "xy-center": "flex gap-2 justify-center items-center",
-    "yx-center": "flex flex-col gap-2 justify-center items-center",
-    "xy-between": "flex gap-2 justify-between items-center",
-    "yx-between": "flex gap-2 flex-col justify-between items-center",
+    xy: "flex gap-2",
+    yx: "flex flex-col gap-2",
+    "xy-center": "xy justify-center items-center",
+    "yx-center": "yx justify-center items-center",
+    "xy-between": "xy justify-between",
+    "yx-between": "yx justify-between",
+    'btn': 'border rounded-md px-2 py-1 cursor-pointer select-none',
+    'disabled': 'cursor-not-allowed op-50'
   },
   presets: [
-    presetUno(),
-    presetAttributify(),
+    presetWind4(),
     presetIcons({
       extraProperties: {
         display: "inline-block",
@@ -26,11 +21,5 @@ export default defineConfig({
         "vertical-align": "text-bottom",
       },
     }),
-    // presetWebFonts({
-    //   provider: "google",
-    //   fonts: {
-    //     mono: ["JetBrains Mono"],
-    //   },
-    // }),
   ],
-});
+})
