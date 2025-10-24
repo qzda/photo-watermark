@@ -3,8 +3,10 @@
   import { ref, watch } from "vue";
   import type { Tags } from "exifreader";
   import { version } from "../package.json";
-  import { devLog, imgFileToDataUrl } from "./utils/img";
+  import { imgFileToDataUrl } from "./utils/img";
+
   import { getImgExif } from "./utils/img";
+  import { devLog } from "./utils/log";
 
   const fileDialog = useFileDialog({
     accept: "image/jpg,image/jpeg,image/tiff",
