@@ -47,7 +47,7 @@
   <div class="flex-1">
     <div class="xy-between flex-wrap">
       <div class="xy items-end">
-        <span class="text-2xl font-bold">Photo Frame</span>
+        <span class="text-2xl font-bold">Photo Watermark</span>
         <span class="text-sm op50 mb-0.5">v{{ version }}</span>
       </div>
 
