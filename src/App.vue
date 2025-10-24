@@ -2,11 +2,11 @@
   import { useFileDialog } from "@vueuse/core";
   import { ref, watch } from "vue";
   import type { Tags } from "exifreader";
-  import { version } from "../package.json";
-  import { imgFileToDataUrl } from "./utils/img";
 
+  import { imgFileToDataUrl } from "./utils/img";
   import { getImgExif } from "./utils/img";
   import { devLog } from "./utils/log";
+  import Nav from "./composables/Nav.vue";
 
   const fileDialog = useFileDialog({
     accept: "image/jpg,image/jpeg,image/tiff",
@@ -38,76 +38,33 @@
       uploadImg.value = undefined;
     }
   });
-
-  function choiceDir(e: MouseEvent) {
-    e.preventDefault();
-    fileDialog.open();
-  }
 </script>
 
 <template>
-  <div class="flex-1">
-    <div class="xy-between flex-wrap">
-      <div class="xy items-end">
-        <span class="text-2xl font-bold">Photo Watermark</span>
-        <span class="text-sm op50 mb-0.5">v{{ version }}</span>
-      </div>
+  <Nav />
 
-      <div class="xy">
-        <div
-          class="btn"
-          @click="choiceDir"
-        >
-          <i class="i-material-symbols:upload" />
-          <span>Upload</span>
-        </div>
+  <div class="p-4 flex-auto flex flex-col items-center gap-4 text-xl">
+    <button
+      class="icon-button i-lucide:image-plus"
+      @click="fileDialog.open()"
+    ></button>
 
-        <div
-          class="btn"
-          :class="[uploadImg ? null : 'disabled']"
-        >
-          <i class="i-material-symbols:download" />
-          <span>Download</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="flex-1 xy-between">
-      <div class="flex-1">
-        <h3 class="my-0">Config</h3>
-      </div>
-
-      <!-- <div class="flex-1">
-      <h3 class="my-0">Info</h3>
-
-      <div>
-        <pre v-if="uploadImg">{{
-          JSON.stringify(
-            {
-              Make: uploadImg.exif?.Make?.description,
-              Model: uploadImg.exif?.Model?.description,
-              FNumber: uploadImg.exif?.FNumber?.description,
-              ISOSpeedRatings: uploadImg.exif?.ISOSpeedRatings?.description,
-              ShutterSpeedValue: uploadImg.exif?.ShutterSpeedValue?.description,
-              FocalLength: uploadImg.exif?.FocalLength?.description,
-              DateTimeOriginal: uploadImg.exif?.DateTimeOriginal?.description,
-              OffsetTime: uploadImg.exif?.OffsetTime?.description,
-            },
-            null,
-            2,
-          )
-        }}</pre>
-      </div>
-    </div> -->
-    </div>
-  </div>
-
-  <div class="max-w-40%">
-    <img
+    <div
       v-if="uploadImg"
-      draggable="false"
-      class="border border-dashed max-h-full max-w-full"
-      :src="uploadImg.fileDataUrl"
-    />
+      class="flex flex-col items-center gap-4"
+    >
+      <img
+        draggable="false"
+        class="border border-dashed w-full max-w-[800px] max-h-[800px]"
+        :src="uploadImg.fileDataUrl"
+      />
+
+      <button
+        class="icon-button i-carbon:download"
+        @click=""
+      ></button>
+    </div>
   </div>
+
+  <!-- <Footer /> -->
 </template>

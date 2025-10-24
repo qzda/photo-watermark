@@ -1,6 +1,7 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "compilerOptions": {
+    "baseUrl": ".",
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
 
     /* Linting */
@@ -9,7 +10,14 @@
     "noUnusedParameters": true,
     // "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+
+    "paths": {
+      "~/*": ["./*"]
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
 }

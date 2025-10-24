@@ -16,7 +16,8 @@
     "vue": "^3.5.22"
   },
   "devDependencies": {
-    "@iconify-json/material-symbols": "^1.2.42",
+    "@iconify-json/carbon": "^1.2.14",
+    "@iconify-json/lucide": "^1.2.70",
     "@types/node": "^24.9.1",
     "@vitejs/plugin-vue": "^5.2.4",
     "@vue/tsconfig": "^0.7.0",
